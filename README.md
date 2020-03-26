@@ -13,7 +13,7 @@ Random matrices in this case are just matrices produced using NumPy's random num
  [0.07576034 0.14667625 0.91825815 0.65656918]]
 ```
 
-![4x4 random matrix (grayscale)](https://user-images.githubusercontent.com/13749006/77688552-a6979f00-6f76-11ea-9714-e585a0063769.png =100x100)
+![4x4 random matrix (grayscale)](https://user-images.githubusercontent.com/13749006/77688552-a6979f00-6f76-11ea-9714-e585a0063769.png?s=100)
 
 The image will look the same if made from the original matrix or from a *shifted* matrix, one that's been divided by the maximum value in it. If we take either the original or the *shifted* matrix and raise it to increasing powers we will notice that, after a certain power, the matrix values don't change that much, which means we have a sort of "stable" configuration at some point. We can see this here (I'm using the *inferno* colormap to see more details in the values):
 
