@@ -13,14 +13,13 @@ Random matrices in this case are just matrices produced using NumPy's random num
  [0.07576034 0.14667625 0.91825815 0.65656918]]
 ```
 
-![4x4 random matrix (grayscale)](https://user-images.githubusercontent.com/13749006/77688552-a6979f00-6f76-11ea-9714-e585a0063769.png)
-
-
-<img src="https://user-images.githubusercontent.com/13749006/77688552-a6979f00-6f76-11ea-9714-e585a0063769.png" width="50" height="50" title="4x4 Random Matrix (grayscale)">
+<img src="https://user-images.githubusercontent.com/13749006/77688552-a6979f00-6f76-11ea-9714-e585a0063769.png" width="250" height="250" title="4x4 Random Matrix (grayscale)">
 
 
 
 The image will look the same if made from the original matrix or from a *shifted* matrix, one that's been divided by the maximum value in it. If we take either the original or the *shifted* matrix and raise it to increasing powers we will notice that, after a certain power, the matrix values don't change that much, which means we have a sort of "stable" configuration at some point. We can see this here (I'm using the *inferno* colormap to see more details in the values):
+
+<img src="https://user-images.githubusercontent.com/13749006/77688641-cf1f9900-6f76-11ea-8231-56a2597c91c1.png" width="100" height="100" title="Random matrix 4x4 to the 2nd power"> | <img src="https://user-images.githubusercontent.com/13749006/77688690-e2caff80-6f76-11ea-854b-b8b18e40d0df.png" width="100" height="100" title="Random matrix 4x4 to the 3rd power"> | <img src="https://user-images.githubusercontent.com/13749006/77688752-f8402980-6f76-11ea-9f4c-08614d5a6a26.png" width="100" height="100" title="Random matrix 4x4 to the 4-th power"> | <img src="https://user-images.githubusercontent.com/13749006/77688790-01c99180-6f77-11ea-9213-759b9bf5abb1.png" width="100" height="100" title="Random matrix 4x4 to the 10-th power"> | <img src="https://user-images.githubusercontent.com/13749006/77688830-127a0780-6f77-11ea-838a-9d646f298da1.png" width="100" height="100" title="Random matrix 4x4 to the 25-th power">
 
 ![Random matrix 4x4 to the 2nd power](https://user-images.githubusercontent.com/13749006/77688641-cf1f9900-6f76-11ea-8231-56a2597c91c1.png) | ![Random matrix 4x4 to the 3rd power](https://user-images.githubusercontent.com/13749006/77688690-e2caff80-6f76-11ea-854b-b8b18e40d0df.png) | ![Random matrix 4x4 to the 4-th power](https://user-images.githubusercontent.com/13749006/77688752-f8402980-6f76-11ea-9f4c-08614d5a6a26.png) | ![Random matrix 4x4 to the 10-th power](https://user-images.githubusercontent.com/13749006/77688790-01c99180-6f77-11ea-9213-759b9bf5abb1.png) | ![Random matrix 4x4 to the 25-th power](https://user-images.githubusercontent.com/13749006/77688830-127a0780-6f77-11ea-838a-9d646f298da1.png)
 
