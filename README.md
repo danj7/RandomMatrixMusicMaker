@@ -37,7 +37,7 @@ python3 -m pip install sounddevice
 
 The file `rm3.py` has the class to play notes from random matrices so just copy it where you can import it. By default it plays at 100 BPM, with a maximum frequency of 440 Hz.
 
-```
+```python
 >>> from rm3 import rm3
 >>> wave = rm3()
 >>> wave.play() #a random matrix is created and played
@@ -49,9 +49,14 @@ The file `rm3.py` has the class to play notes from random matrices so just copy 
 ```
 
 So far this is just playing frequencies with relation to actual notes. However, you can shift these frequencies to the closest notes and displays them.
-```
+```python
 >>> wave = rm3(tempo=75, max_freq=220)
 >>> wave.to_notes()
 A#5 A#5 G5 B5 G#6 G6 F6 A6 D#6 D6 C6 E6 B5 B5 G#5 C6
 >>> wave.play(show=True) #play and show matrix
 ```
+
+## To do
+* save data file and/or waveform
+* some effects or FM synth?
+* make it so melody is contained in `(min_freq, max_freq)` and not `(min_freq, max_freq]`
