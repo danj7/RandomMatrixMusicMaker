@@ -7,8 +7,12 @@ class rm3(object):
     """
     Class to make and play random matrices as sound.
     TO DO:
+    * !!New way of making tone array!!
+        * create separate method to make tone array so that there is a central freq and a range of freqs
     * implement FM synth with detuning
     * saving array and waveform
+
+
     """
 
     def __init__(self,
@@ -74,6 +78,9 @@ class rm3(object):
     def make_play(self, n_repeats=1, loop=False):
         self.make_matrix(show=False)
         self.play(n_repeats, loop)
+
+    def _make_tone_array(self):
+        pass
 
     def _generate_waveform(self):
         tone_dur = 60 / (self.tempo * self.beat_division)  # seconds
