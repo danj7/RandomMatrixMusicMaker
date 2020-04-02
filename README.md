@@ -59,3 +59,4 @@ A#5 A#5 G5 B5 G#6 G6 F6 A6 D#6 D6 C6 E6 B5 B5 G#5 C6
 ## To do
 * save data file and/or waveform
 * maybe some effects or FM synth?
+* multiple streams/sounds at the same time?

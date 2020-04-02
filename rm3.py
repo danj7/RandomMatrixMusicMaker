@@ -179,3 +179,7 @@ class rm3(object):
         else:
             raise Exception(
                 'Must first make a Random Matrix and run the .to_notes() method')
+
+    def save(self):
+        """Saves all data? Save waveform as .wav file and frequency/note sequence?"""
+        pass
