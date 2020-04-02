@@ -11,15 +11,16 @@ class rm3(object):
         * create separate method to make tone array so that there is a central freq and a range of freqs
     * implement FM synth with detuning
     * saving array and waveform
-
-
+    * finish documentation
     """
 
     def __init__(self,
                  dimension=4,
                  tempo=100,
-                 max_freq=440.0,
-                 min_freq=20.0,
+                 central_freq=440.0,
+                 freq_spread='tight',
+                 min_freq=20.0,  # lower safety stop
+                 max_freq=20000.0,  # higher safety stop
                  beat_division=4,
                  attenuation=0.8,
                  clip_level=0.5,
@@ -27,21 +28,23 @@ class rm3(object):
                  ):
         self.dimension = dimension
         self.tempo = tempo
-        self.max_freq = max_freq
+        self.central_freq = central_freq
+        self.freq_spread = freq_spread
         self.min_freq = min_freq
+        self.max_freq = max_freq
         self.beat_division = beat_division
         self.attenuation = attenuation
         self.clip_level = clip_level
         self.samples_per_second = samples_per_second
         self.waveform = None
         self.rm = None
-        # self._rm_bare = None
-        self._rm_backup = None
+        self._freq_array = None
         self._melody = None
+        self._melody_array = None
         self._melody_notes = None
         self._melody_indices = None
 
-    def make_matrix(self, n_times=7, show=True):
+    def make_matrix(self, n_times=10, show=True):
         """
         Makes a square matrix of size dimXdim, raises it to the n_times power, and
         divides by the maximum value. Then prints it and paints it.
@@ -49,15 +52,16 @@ class rm3(object):
         self.rm = np.linalg.matrix_power(np.random.random(
             (self.dimension, self.dimension)), n_times)
         self.rm /= self.rm.max()
+        self._freq_array = self._make_freq_array()
         if show:
             self.show_matrix()
 
     def show_matrix(self):
         """Prints and paints matrix rm."""
         fig, ax = plt.subplots()
-        ax.imshow(self.rm, cmap=plt.cm.inferno)
+        ax.imshow(self._freq_array, cmap=plt.cm.inferno)
         # The pattern will be very similar, rounded or not
-        print(self.rm * self.max_freq)
+        print(self._freq_array)
         _ = ax.axis('off')
         fig.show()
 
@@ -79,18 +83,29 @@ class rm3(object):
         self.make_matrix(show=False)
         self.play(n_repeats, loop)
 
-    def _make_tone_array(self):
-        pass
+    def _make_freq_array(self):
+        if self.freq_spread == 'tight':
+            freq_range = self.central_freq * 1.5 - self.central_freq * 3 / 4
+        elif self.freq_spread == 'wide':
+            freq_range = self.central_freq * 2 - self.central_freq / 2
+        elif (len(self.freq_spread) == 2) and (self.freq_spread[0] < self.freq_spread[1]):
+            freq_range = self.freq_spread[1] - self.freq_spread[0]
+        else:
+            raise Exception(
+                "freq_spread must be 'tight'(default), 'wide', or a list/array/tuple with lower frequency and higher frequency")
+        return np.clip((self.rm - self.rm.mean()) * freq_range * 0.5 / self.rm.std() + self.central_freq, self.min_freq, self.max_freq)
 
     def _generate_waveform(self):
         tone_dur = 60 / (self.tempo * self.beat_division)  # seconds
         each_tone_sample = np.arange(tone_dur * self.samples_per_second)
-        tone_array = self.rm.T * \
+        if self._melody_array is None:
+            self._freq_array = self._make_freq_array()
+        else:
+            self._freq_array = self._melody_array.copy()
+        tone_array = self._freq_array.T * \
             each_tone_sample.reshape(
                 each_tone_sample.shape[0], 1, 1)
-        if self._rm_backup is None:
-            tone_array *= self.max_freq  # its not been rounded
-        tone_array = np.clip(tone_array.flatten('F'), self.min_freq, None)
+        tone_array = tone_array.flatten('F')
         # Envelope to avoid clicking
         fraction = 1 / 10  # fraction of tone waveform to be faded in/out
         n_tones = self.rm.flatten().shape[0]  # number of tones
@@ -131,10 +146,10 @@ class rm3(object):
                 2093., 2217.5, 2349.3, 2489., 2637., 2793.8,
                 2960., 3136., 3322.4, 3520., 3729.3, 3951.1])
             residuals = np.subtract.outer(
-                self.rm.flatten() * self.max_freq, notes_freqs)
+                self._freq_array.flatten(),
+                notes_freqs)
             notes_indices = np.argmin(abs(residuals), axis=1)
-            self._rm_backup = self.rm.copy()
-            self.rm = notes_freqs[notes_indices].reshape(
+            self._melody_array = notes_freqs[notes_indices].reshape(
                 (self.dimension, self.dimension))
             self._melody_notes = notes[notes_indices % len(notes)]
             self._melody_indices = notes_indices // len(notes)
@@ -144,9 +159,10 @@ class rm3(object):
 
     def to_freqs(self):
         """Returns a melody that has been rounded to notes in the piano to its original state"""
-        if np.all(self._rm_backup):
-            self.rm = self._rm_backup.copy()
-            self._rm_backup = None
+        if np.all(self._melody_array):
+            self._melody_array = None
+            self._melody_notes = None
+            self._melody_indices = None
             self._melody = None
         else:
             raise Exception(
@@ -154,7 +170,7 @@ class rm3(object):
 
     def melody(self):
         """Prints out the melody if method .to_notes() has been run."""
-        if np.all(self._rm_backup):
+        if np.all(self._melody_array):
             self._melody = ''
             for note, octave in list(zip(self._melody_notes, self._melody_indices)):
                 self._melody += note + str(octave) + ' '
