@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import sounddevice as sd
+import soundfile as sf
+import time
 
 
 class rm3(object):
@@ -180,6 +182,12 @@ class rm3(object):
             raise Exception(
                 'Must first make a Random Matrix and run the .to_notes() method')
 
-    def save(self):
-        """Saves all data? Save waveform as .wav file and frequency/note sequence?"""
-        pass
+    def save(self, filename=None):
+        """Saves waveform as .wav file.
+        TO DO: add a np.tile() function to waveform so one could save repeats????
+        """
+        if filename is None:
+            filename = time.strftime("%Y%m%d%H%M%S") + '.wav'
+        if filename[-4:] != '.wav':
+            filename += '.wav'
+        sf.write(filename, self.waveform, self.samples_per_second, 'PCM_16')
