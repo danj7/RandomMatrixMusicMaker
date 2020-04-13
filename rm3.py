@@ -8,19 +8,79 @@ import time
 class rm3(object):
     """
     Class to make and play random matrices as sound.
-    TO DO:
-    * !!New way of making tone array!!
-        * create separate method to make tone array so that there is a central freq and a range of freqs
-    * implement FM synth with detuning
-    * saving array and waveform
-    * finish documentation
+
+    This class takes a random square matrix and raises to an integer power
+    so that it generates a pattern that doesn't change when raised to a
+    higher power. This matrix is then shifted so its values are frequencies
+    in the hearing range, and these frequencies are used to generate a
+    waveform that can be played.
+
+    Parameters
+    ----------
+    central_freq : float, optional
+        Central frequency of the melody. Will not necessarily be
+        present in the final melody.
+    freq_spread : str, array_like, optional
+        Indicates the range between the lowest and highest note
+        possible in the melody. The options are 'tight' (default),
+        'wide', or list/array like [low_freq, high_freq].
+    tempo : float, optional
+        Tempo of the melody, 100 BPM by default. Can be changed
+        after creating the melody.
+    dimension : int, optional
+        Dimension of the matrix used to generate random melody.
+        The matrix will be of shape dimension by dimension.
+    min_freq : float, optional
+        Minimum frequency allowed in melody. By default it is
+        20.0 Hz as a safety measure.
+    max_freq : float, optional
+        Maximum frequency allowed in melody. By default it is
+        20.0 kHz as a safety measure.
+    beat_division : int, optional
+        How each beat is divided. Used to calculate the length of
+        each tone.
+    attenuation : float, optional
+        Attenuation of waveform to prevent it being too loud.
+        Should be a value between 0 and 1.
+    clip_level : float, optional
+        Clipping applied to final waveform to make it sound a
+        little better. Should be a value below that of `attenuation`.
+    samples_per_second : int, optional
+        Sample rate of waveform.
+
+    Methods
+    -------
+    make_matrix(n_times=10, show=True)
+        Makes a new matrix and shows it.
+    show_matrix()
+        Shows the current matrix, its values and visualization.
+    play(n_repeats=1, loop=False, show=False)
+        Plays the current matrix, repeats it 1 time, doesn't
+        loop it, doesn't show it.
+    stop()
+        Stops a currently playing melody.
+    make_play(n_repeats=1, loop=False)
+        Makes a new matrix and playes it, repeats it once, doesn't
+        loop it.
+    to_notes()
+        Shifts frequencies in current matrix to those of closest
+        notes.
+    to_freqs()
+        Returns to raw frequencies. Use only after applying the
+        .to_notes() method.
+    melody()
+        Prints out the melody if method .to_notes() has been run.
+    save(filename=None, repeats=1)
+        Saves the waveform, repeated once, to a WAVE file. If
+        filename is None it will name it with the current date
+        and time.
     """
 
     def __init__(self,
-                 dimension=4,
-                 tempo=100,
                  central_freq=440.0,
                  freq_spread='tight',
+                 tempo=100,
+                 dimension=4,
                  min_freq=20.0,  # lower safety stop
                  max_freq=20000.0,  # higher safety stop
                  beat_division=4,
@@ -182,12 +242,14 @@ class rm3(object):
             raise Exception(
                 'Must first make a Random Matrix and run the .to_notes() method')
 
-    def save(self, filename=None):
-        """Saves waveform as .wav file.
-        TO DO: add a np.tile() function to waveform so one could save repeats????
+    def save(self, filename=None, repeats=1):
+        """
+        Saves waveform as a 16-bit .wav file.
+        Be sure to use filename that ends in .wav.
         """
         if filename is None:
             filename = time.strftime("%Y%m%d%H%M%S") + '.wav'
         if filename[-4:] != '.wav':
             filename += '.wav'
-        sf.write(filename, self.waveform, self.samples_per_second, 'PCM_16')
+        sf.write(filename, np.tile(self.waveform, repeats),
+                 self.samples_per_second, 'PCM_16')

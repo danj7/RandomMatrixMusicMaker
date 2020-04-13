@@ -27,6 +27,10 @@ After raising it to the 4th power the matrix doesn't change much and, again, dar
 
 ## Requirements and Example
 
+We need to install [`python-sounddevice`](https://python-sounddevice.readthedocs.io) and [`soundfile`](https://pysoundfile.readthedocs.io)
+
+
+
 For this to work we need NumPy and Matplotlib, as well as to have installed [`python-sounddevice`](https://python-sounddevice.readthedocs.io), which can be installed using the `conda` package manager or with PyPI:
 
 ```
@@ -57,5 +61,5 @@ A#5 A#5 G5 B5 G#6 G6 F6 A6 D#6 D6 C6 E6 B5 B5 G#5 C6
 ```
 
 ## To do
-* maybe some effects or FM synth?
-* multiple streams/sounds at the same time? or a mixer?
+* some effects
+* multiple streams/sounds at the same time
