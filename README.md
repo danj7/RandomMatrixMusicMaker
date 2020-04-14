@@ -21,12 +21,12 @@ The image will look the same if made from the original matrix or from a * shifte
 <img src = "https://user-images.githubusercontent.com/13749006/77688641-cf1f9900-6f76-11ea-8231-56a2597c91c1.png" height = "300" title = "Random matrix 4x4 to the 2nd power" > <img src = "https://user-images.githubusercontent.com/13749006/77688690-e2caff80-6f76-11ea-854b-b8b18e40d0df.png" height = "300" title = "Random matrix 4x4 to the 3rd power" > <img src = "https://user-images.githubusercontent.com/13749006/77688752-f8402980-6f76-11ea-9f4c-08614d5a6a26.png" height = "300" title = "Random matrix 4x4 to the 4-th power" > <img src = "https://user-images.githubusercontent.com/13749006/77688790-01c99180-6f77-11ea-9213-759b9bf5abb1.png" height = "300" title = "Random matrix 4x4 to the 10-th power" > <img src = "https://user-images.githubusercontent.com/13749006/77688830-127a0780-6f77-11ea-838a-9d646f298da1.png" height = "300" title = "Random matrix 4x4 to the 25-th power" >
 
 
-After raising it to the 4th power the matrix doesn't change much and, again, darker squares are closer to zero while lighter squares are to one. The grid now has some sections that repeat: Row 1 is similar to Row 3, and Column 1 has all low values. That repetition and "*pattern*" made me think of a tone pattern, like one would find on a[16 - step sequencer](https: // www.youtube.com / watch?v=BVHJWTX_gIo). So the natural progression of events means I would scale them to frequencies and find a way to produce audio tones from random matrices!
+After raising it to the 4th power the matrix doesn't change much and, again, darker squares are closer to zero while lighter squares are to one. The grid now has some sections that repeat: Row 1 is similar to Row 3, and Column 1 has all low values. That repetition and "*pattern*" made me think of a tone pattern, like one would find on a [16 - step sequencer](https: // www.youtube.com / watch?v=BVHJWTX_gIo). So the natural progression of events means I would scale them to frequencies and find a way to produce audio tones from random matrices!
 
 
 ## Requirements and Example
 
-We need to install[`python - sounddevice`](https: // python - sounddevice.readthedocs.io) and [`soundfile`](https: // pysoundfile.readthedocs.io), which can be installed using the `pip` command. Then, the file `rm3.py` has the class to play notes from random matrices so just copy it where you can import it. By default it plays at 100 BPM, with a maximum frequency of 440 Hz. Here's an example:
+We need to install [`python - sounddevice`](https: // python - sounddevice.readthedocs.io) and [`soundfile`](https: // pysoundfile.readthedocs.io), which can be installed using the `pip` command. Then, the file `rm3.py` has the class to play notes from random matrices so just copy it where you can import it. By default it plays at 100 BPM, with a maximum frequency of 440 Hz. Here's an example:
 
 ```python
 >> > from rm3 import rm3
