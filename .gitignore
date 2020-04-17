@@ -3,3 +3,5 @@
 *.dat
 /readme_files
 *.wav
+*.html
+/presentation_files

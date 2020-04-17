@@ -49,5 +49,7 @@ D#2 E2 B2 D#3 B1 C#2 G#2 C3 B1 C2 G#2 B2 A2 A#2 F3 G#3
 ```
 
 # To do
+* output as MIDI file
+* make it adhere to a scale/mode
 * some effects
 * multiple streams / sounds at the same time

@@ -59,9 +59,9 @@ class rm3(object):
         loop it, doesn't show it.
     stop()
         Stops a currently playing melody.
-    make_play(n_repeats=1, loop=False)
+    make_play(n_repeats=1, loop=False, show=False)
         Makes a new matrix and playes it, repeats it once, doesn't
-        loop it.
+        loop it, doesn't show it.
     to_notes()
         Shifts frequencies in current matrix to those of closest
         notes.
@@ -149,8 +149,9 @@ class rm3(object):
     def stop(self):
         sd.stop()
 
-    def make_play(self, n_repeats=1, loop=False):
-        self.make_matrix(show=False)
+    def make_play(self, n_repeats=1, loop=False, show=False):
+        """Makes a new matrix and plays it."""
+        self.make_matrix(show=show)
         self.play(n_repeats, loop)
 
     def _make_freq_array(self):
